@@ -37,6 +37,17 @@ module.exports = {
         loader: 'babel-loader',
         include: [resolve('src'), resolve('test')]
       },
+      {
+        test: /\.less$/,
+        // use: [{
+        //     loader: "style-loader" // creates style nodes from JS strings
+        // }, {
+        //     loader: "css-loader" // translates CSS into CommonJS
+        // }, {
+        //     loader: "less-loader" // compiles Less to CSS
+        // }]
+        loader: 'style-loader!css-loader!less-loader'
+      },
       // {
       //   test: /\.css$/,
       //   use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' })
