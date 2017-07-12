@@ -16,8 +16,10 @@
     },
     created() {
       //初始化rem
+      let windowHeight = window.innerHeight;
+      document.documentElement.style.minHeight = windowHeight + 'px';
       function resize() {
-        var windowWidth = window.innerWidth;
+        let windowWidth = window.innerWidth;
         document.documentElement.style.fontSize = windowWidth/10 + 'px';
       }
       resize();
