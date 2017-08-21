@@ -1,11 +1,25 @@
 <template>
 	<header>
      	<span>Jacy Chat</span>
-     	<div class="ui-icon-refresh refresh"></div>
+     	<div class="ui-icon-refresh refresh" @click="refresh"></div>
      	<div class="ui-icon-add add"></div>
      	<div class="box box-shadow"></div>
     </header>
 </template>
+
+<script>
+	module.exports = {
+		methods: {
+			refresh: function() {
+				let obj;
+				if(sessionStorage.page == 'login') {
+					obj = document.getElementsByClassName('loginForm')[0];
+					obj.reset();
+				}
+			}
+		}
+	}
+</script>
 
 <style scoped lang='less'>
 	@heightLine: 1.3rem;

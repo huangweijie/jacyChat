@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <appHeader></appHeader>
-    <router-view></router-view>
+    <router-view host="http://10.100.147.65:3000/"></router-view>
   </div>
 </template>
 
@@ -24,6 +24,8 @@
       }
       resize();
       window.onresize = resize;
+      document.getElementsByTagName('html')[0].style.minHeight = window.innerHeight + 'px';
+      document.getElementsByTagName('body')[0].style.minHeight = window.innerHeight + 'px';
     }
   }
 </script>
