@@ -1,14 +1,14 @@
 <template>
-	<div class="container">
-		<button @click="close">close</button>
-		<transition name="contact-open">
+	<transition name="contact-open">
+		<div class="container">
 			<p v-if='show'>123123123123</p>
-		</transition>
-	</div>
+		</div>
+	</transition>
 </template>
 
 <script>
-	var http = require('../axios')
+	let http = require('../axios')
+	let common = require('../common')
 	module.exports = {
 		data() {
 			return {
@@ -18,9 +18,18 @@
 		methods: {
 			close: function() {
 				this.show = !this.show
+			},
+			testA: () => {
+				console.log(this)
 			}
+		},
+		created() {
+			var self = {'a':'1'}
+			common.changeHeader(this, {
+				hasReturn: true,
+				isContact: true
+			});
 		}
-
 	}
 </script>
 

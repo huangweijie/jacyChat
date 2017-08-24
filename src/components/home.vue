@@ -18,10 +18,11 @@
 </template>
 
 <script>
-	var http = require('../axios')
+	let http = require('../axios')
+	let common = require('../common')
 	module.exports = {
 		props: ['host'],
-		data() {
+		data: () => {
 			return {
 				groupList: [
 					{
@@ -81,6 +82,11 @@
 		},
 		created() {
 			sessionStorage.page = 'home';
+			common.changeHeader(this, {
+				hasTitle: true,
+				hasAdd: true,
+				hasRefresh: true
+			})
 			http('get', this.host + 'getGroupList', {}, 'json', function(res) {
 				console.log(res);
 			}, function(err) {
