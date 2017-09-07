@@ -13,8 +13,8 @@
 				setTimeout(() => {
 					this.$parent.tipShow = false;
 					this.$parent.throttle = true;
-				}, 1000)
-			}, 2000)
+				}, 500)
+			}, 1000)
 		}
 	}
 </script>
@@ -28,7 +28,7 @@
 		background-color: rgba(0, 0, 0, .8);
 		font-size: .5rem;
 		opacity: 1;
-		transition: opacity 1s;
+		transition: opacity .5s;
 		color: #fff;
 		position: absolute;
 		left: 0;

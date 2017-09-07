@@ -59,9 +59,13 @@
 						username: this.$refs.username.value,
 						password: this.$refs.password.value
 					}
-					http('post', this.host + 'login', data, 'json', function(res) {
+					http('post', this.host + 'login', data, 'json', (res) => {
 						if(res.data.code == 1) {
 							location.replace('/#/home')
+						}else {
+							this.throttle = false;
+							this.tipShow = true;
+							this.tips = res.data.msg;
 						}
 					}, function(err) {
 						console.log(err);

@@ -1,12 +1,12 @@
 <template>
 	<div class="container ui-selector-content">
 		<ul class="groupList">
-			<li v-for="list in groupList" class="ui-selector-item" v-cloak>
+			<li v-for="list in groupList" class="ui-selector-item" v-cloak :class="{active: list.groupStatus}">
 				<h3 class="ui-border-b" @click="toggleList">
-					{{list.name}}
+					{{list.groupName}}
 				</h3>
 				<ul class="ui-list ui-border-b">
-					<li class="ui-list-info ui-border-t" v-for="contactList in list.contactList" >
+					<li class="ui-list-info ui-border-t" v-for="contactList in list.groupList" >
 						<router-link :to="{name: 'contact', params: {userId: userId, contactId: contactList.contactId}}">
 							<i class="ui-icon-personal"></i>{{contactList.name}}
 						</router-link>
@@ -14,61 +14,40 @@
 				</ul>
 			</li>
 		</ul>
+		<search v-if='searchShow' :host='host'></search>
 	</div>
 </template>
 
 <script>
 	let http = require('../axios')
 	let common = require('../common')
+	let search = require('./search.vue')
 	module.exports = {
 		props: ['host'],
+		components: {
+			search
+		},
 		data: () => {
 			return {
-				groupList: [
-					{
-						name: '最近联系人',
-						contactList: [
-							{
-								name:'ge姐姐',
-								contactId: '123'
-							}, {
-								name:'龙妈',
-								contactId: '456'
-							}, {
-								name:'卡丽熙',
-								contactId: '789'
-							}, 
-						]
-					},{
-						name: '我的好友',
-						contactList: [
-							{
-								name:'gejiejie',
-								contactId: '135'
-							}
-						]
-					},{
-						name: '陌生人',
-						contactList: [
-							{
-								name:'gesister',
-								contactId: '246'
-							}
-						]
-					},
-				],
+				groupList: [],
 				isClosing: false,
 				fontSize: parseFloat(document.getElementsByTagName('html')[0].style.fontSize),
-				userId: '123'
+				userId: '123',
+				searchShow: false,
 			}
 		},
 		methods: {
 			toggleList: function(e) {
-				var currentTarget = e.currentTarget;
-				var contactList = currentTarget.nextSibling.nextSibling;
-				var display = window.getComputedStyle(contactList, null).getPropertyValue('display');
-				var height = window.getComputedStyle(contactList, null).getPropertyValue('height');
-				var totalHeight = contactList.childNodes.length * 1.5 * this.fontSize + 'px';
+				let currentTarget = e.currentTarget;
+				let contactList = currentTarget.nextSibling.nextSibling;
+				let display = window.getComputedStyle(contactList, null).getPropertyValue('display');
+				let height = window.getComputedStyle(contactList, null).getPropertyValue('height');
+				let totalHeight = contactList.childNodes.length * 1.5 * this.fontSize + 'px';
+				if(contactList.childNodes.length == 0) {
+					let classList = currentTarget.parentNode.classList
+					classList.contains('active') ? classList.remove('active') : classList.add('active')
+					return
+				}
 				if(height == '0px' || this.isClosing) {
 					this.isClosing = false;
 					contactList.style.height = totalHeight;
@@ -87,9 +66,14 @@
 				hasAdd: true,
 				hasRefresh: true
 			})
-			http('get', this.host + 'getGroupList', {}, 'json', function(res) {
-				console.log(res);
-			}, function(err) {
+			common.bus.$on('search', (data) => {
+				this.searchShow = data;
+			})
+			http('get', this.host + 'getGroupList', {
+				token: localStorage.access_token
+			}, 'json', (res) => {
+				this.groupList = res.data.grouplist;
+			}, (err) => {
 				console.log(err);
 			})
 		}

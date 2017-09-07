@@ -5,7 +5,6 @@
     </div>
 </template>
 
-<script src="../static/js/frozen.js"></script>
 <script>
     import 'frozenui'
     import appHeader from '@/components/header'
@@ -18,7 +17,7 @@
                 hasRefresh: true,
                 hasAdd: false,
                 hasReturn: false,
-                isContact: false
+                isContact: false,
             }
         },
         components: {

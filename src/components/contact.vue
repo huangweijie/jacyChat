@@ -1,7 +1,7 @@
 <template>
 	<transition name="contact-open">
 		<div class="container">
-			<p v-if='show'>123123123123</p>
+			<p>123123123123</p>
 		</div>
 	</transition>
 </template>
@@ -9,26 +9,25 @@
 <script>
 	let http = require('../axios')
 	let common = require('../common')
+	let io = require('socket.io-client')
 	module.exports = {
 		data() {
 			return {
-				show: true
+				socket: io(this.host)
 			}
 		},
+		props: ['host'],
 		methods: {
-			close: function() {
-				this.show = !this.show
-			},
-			testA: () => {
-				console.log(this)
-			}
+
 		},
 		created() {
-			var self = {'a':'1'}
 			common.changeHeader(this, {
 				hasReturn: true,
 				isContact: true
 			});
+			this.socket.emit('my other event', {
+				a: 'a'
+			})
 		}
 	}
 </script>
@@ -41,6 +40,6 @@
 		opacity: 0;
 	}
 	.contact-open-enter-to {
-		opacity: 0.5;
+		opacity: 1;
 	}
 </style>

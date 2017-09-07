@@ -4,11 +4,12 @@
      	<span v-if="hasTitle" class="title">Jacy Chat</span>
      	<span v-if="isContact" class="contactName">contactName</span>
      	<i v-if="hasRefresh" class="ui-icon-refresh refresh" @click="refresh"></i>
-     	<i v-if="hasAdd" class="ui-icon-add add"></i>
+     	<i v-if="hasAdd" class="ui-icon-add add" @click='add'></i>
     </header>
 </template>
 
 <script>
+	let common = require('../common')
 	module.exports = {
 		props: ['hasReturn', 'hasTitle', 'isContact', 'hasRefresh', 'hasAdd'],
 		methods: {
@@ -21,6 +22,9 @@
 					obj = document.getElementsByClassName('loginForm')[0];
 					obj.reset();
 				}
+			},
+			add: function() {
+				common.bus.$emit('search', true)
 			}
 		}
 	}

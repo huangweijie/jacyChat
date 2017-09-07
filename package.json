@@ -68,6 +68,7 @@
     "shelljs": "^0.7.6",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.8.0",
+    "socket.io": "^2.0.3",
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.8",
     "vue-loader": "^12.1.0",
