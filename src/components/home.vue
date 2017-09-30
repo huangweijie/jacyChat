@@ -1,11 +1,11 @@
 <template>
 	<div class="container ui-selector-content">
 		<ul class="groupList">
-			<li v-for="list in groupList" class="ui-selector-item" v-cloak :class="{active: list.groupStatus}">
+			<li v-for="list in groupList" class="ui-selector-item" :class="{active: list.groupStatus}">
 				<h3 class="ui-border-b" @click="toggleList">
 					{{list.groupName}}
 				</h3>
-				<ul class="ui-list ui-border-b">
+				<ul class="ui-list ui-border-b" :ref="list.groupName">
 					<li class="ui-list-info ui-border-t" v-for="contactList in list.groupList" >
 						<router-link :to="{name: 'contact', params: {userId: userId, contactId: contactList.contactId}}">
 							<i class="ui-icon-personal"></i>{{contactList.name}}
@@ -31,7 +31,7 @@
 			return {
 				groupList: [],
 				isClosing: false,
-				fontSize: parseFloat(document.getElementsByTagName('html')[0].style.fontSize),
+				fontSize: parseFloat(document.documentElement.style.fontSize),
 				userId: '123',
 				searchShow: false,
 			}
@@ -57,33 +57,55 @@
 					contactList.style.height = '0';
 					currentTarget.parentNode.classList.remove('active');
 				}
+			},
+			bindEvent: function() {
+				common.changeHeader(this, {
+					hasTitle: true,
+					hasAdd: true,
+					hasRefresh: true
+				})
+				common.bus.$on('search', (data) => {
+					this.searchShow = data;
+				})
+				common.bus.$on('updateGroupList', (user) => {
+					this.groupList.forEach((value, index) => {
+						if(value.groupName == '我的好友') {
+							value.groupList.push({
+								contactId: user.userName,
+								name: user.userId
+							})
+						}
+					})
+					let updateGroup = (this.$refs)['我的好友'][0];
+					updateGroup.style.height = parseFloat(updateGroup.style.height) + 1.5 * this.fontSize + 'px';
+				})
+			},
+			initGroupList: function() {
+				http('get', this.host + 'getGroupList', {
+					token: localStorage.access_token
+				}, 'json', (res) => {
+					this.groupList = res.data.grouplist;
+					this.$nextTick(() => {
+						for(let name in this.$refs) {
+							if(this.$refs[name][0].classList.contains('ui-list')) {
+								this.$refs[name][0].style.height = window.getComputedStyle(this.$refs[name][0], null).getPropertyValue('height');
+							}
+						}
+					})
+				}, (err) => {
+					console.log(err);
+				})
 			}
 		},
 		created() {
 			sessionStorage.page = 'home';
-			common.changeHeader(this, {
-				hasTitle: true,
-				hasAdd: true,
-				hasRefresh: true
-			})
-			common.bus.$on('search', (data) => {
-				this.searchShow = data;
-			})
-			http('get', this.host + 'getGroupList', {
-				token: localStorage.access_token
-			}, 'json', (res) => {
-				this.groupList = res.data.grouplist;
-			}, (err) => {
-				console.log(err);
-			})
+			this.bindEvent();
+			this.initGroupList();
 		}
 	}
 </script>
 
 <style lang="less" scoped>
-	[v-cloak] {
-		display: none;
-	}
 	h3 {
 		font-size: .5rem;
 		height: 1.5rem;
@@ -101,6 +123,9 @@
 			top: 0;
 			bottom: 0;
 			margin: auto;
+		}
+		&.active .ui-list {
+			height: auto;
 		}
 	}
 	.ui-list {

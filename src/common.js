@@ -8,6 +8,7 @@ module.exports = {
         parent.hasReturn = obj.hasReturn || false;
         parent.isContact = obj.isContact || false;
 	},
+	//上车了上车了，有什么消息都可以传输
 	bus: new vue.default(),
 	getCookie: (key) => {
 		return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null

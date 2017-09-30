@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" v-cloak>
         <appHeader :hasTitle='hasTitle' :hasRefresh='hasRefresh' :hasAdd='hasAdd' :hasReturn='hasReturn' :isContact='isContact'></appHeader>
         <router-view host="http://10.100.147.65:3000/"></router-view>
     </div>
@@ -40,6 +40,9 @@
 </script>
 
 <style>
+    [v-cloak] {
+        display: none;
+    }
     * {
         margin: 0;
         padding: 0;
