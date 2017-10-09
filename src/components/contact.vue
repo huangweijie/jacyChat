@@ -23,7 +23,8 @@
 		created() {
 			common.changeHeader(this, {
 				hasReturn: true,
-				isContact: true
+				isContact: true,
+				contactName: this.$route.params.contactName
 			});
 			this.socket.emit('my other event', {
 				a: 'a'
@@ -34,12 +35,12 @@
 
 <style lang="less" scoped>
 	.contact-open-enter-active {
-		transition: all 2s ease;
+		// transition: all 2s ease;
 	}
 	.contact-open-enter {
-		opacity: 0;
+		// opacity: 0;
 	}
 	.contact-open-enter-to {
-		opacity: 1;
+		// opacity: 1;
 	}
 </style>

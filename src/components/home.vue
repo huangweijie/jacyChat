@@ -7,7 +7,7 @@
 				</h3>
 				<ul class="ui-list ui-border-b" :ref="list.groupName">
 					<li class="ui-list-info ui-border-t" v-for="contactList in list.groupList" >
-						<router-link :to="{name: 'contact', params: {userId: userId, contactId: contactList.contactId}}">
+						<router-link :to="{name: 'contact', params: {userId: userId, contactId: contactList.contactId, contactName: contactList.name}}">
 							<i class="ui-icon-personal"></i>{{contactList.name}}
 						</router-link>
 					</li>
@@ -60,9 +60,9 @@
 			},
 			bindEvent: function() {
 				common.changeHeader(this, {
-					hasTitle: true,
 					hasAdd: true,
-					hasRefresh: true
+					hasRefresh: true,
+					hasPerMes: true,
 				})
 				common.bus.$on('search', (data) => {
 					this.searchShow = data;
@@ -154,6 +154,9 @@
 				}
 			}
 		}
+		li:first-child {
+			border-top: 1px solid rgba(0, 0, 0, .1);
+		}
 		li:last-child {
 			border-bottom: 0;
 		}
@@ -161,5 +164,9 @@
 	.ui-selector-item {
 		font-size: .5rem;
 		line-height: 1.5rem;
+	}
+	.ui-icon-personal {
+		font-size: 1rem;
+		vertical-align: middle;
 	}
 </style>

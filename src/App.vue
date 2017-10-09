@@ -1,6 +1,6 @@
 <template>
     <div id="app" v-cloak>
-        <appHeader :hasTitle='hasTitle' :hasRefresh='hasRefresh' :hasAdd='hasAdd' :hasReturn='hasReturn' :isContact='isContact'></appHeader>
+        <appHeader :hasTitle='hasTitle' :hasRefresh='hasRefresh' :hasAdd='hasAdd' :hasReturn='hasReturn' :isContact='isContact' :hasPerMes='hasPerMes' :contactName='contactName'></appHeader>
         <router-view host="http://10.100.147.65:3000/"></router-view>
     </div>
 </template>
@@ -18,6 +18,8 @@
                 hasAdd: false,
                 hasReturn: false,
                 isContact: false,
+                hasPerMes: false,
+                contactName: ''
             }
         },
         components: {

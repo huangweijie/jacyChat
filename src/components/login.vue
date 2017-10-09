@@ -61,6 +61,7 @@
 					}
 					http('post', this.host + 'login', data, 'json', (res) => {
 						if(res.data.code == 1) {
+							sessionStorage.userId = res.data.user;
 							location.replace('/#/home')
 						}else {
 							this.throttle = false;
