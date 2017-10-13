@@ -1,6 +1,6 @@
 let vue = require('vue');
 let io = require('socket.io-client');
-let host = 'http://10.100.147.65:3000/';
+let host = 'http://localhost:3000/';
 module.exports = {
 	changeHeader: (vm, obj) => {
 		let parent = vm.$parent;
@@ -14,7 +14,6 @@ module.exports = {
 	},
 	//上车了上车了，有什么消息都可以传输
 	bus: new vue.default(),
-	socket: io(host),
 	getCookie: (key) => {
 		return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null
 	},

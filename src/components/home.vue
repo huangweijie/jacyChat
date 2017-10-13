@@ -7,14 +7,15 @@
 				</h3>
 				<ul class="ui-list ui-border-b" :ref="list.groupName">
 					<li class="ui-list-info ui-border-t" v-for="contactList in list.groupList" >
-						<router-link :to="{name: 'contact', params: {userId: userId, contactId: contactList.contactId, contactName: contactList.name}}">
-							<i class="ui-icon-personal"></i>{{contactList.name}}
+						<router-link :to="{name: 'contact', params: {userId: userId, contactId: contactList.contactId, contactName: contactList.name, head: contactList.head}}">
+							<i :class="{'ui-icon-personal': contactList.head == 0, 'ui-icon-femail': contactList.head == 1}"></i>{{contactList.name}}
 						</router-link>
 					</li>
 				</ul>
 			</li>
 		</ul>
 		<search v-if='searchShow' :host='host'></search>
+		<permes v-if='perMes' :userId='userId' isSelf='true' :host='host' :headProp='head'></permes>
 	</div>
 </template>
 
@@ -22,18 +23,23 @@
 	let http = require('../axios')
 	let common = require('../common')
 	let search = require('./search.vue')
+	let permes = require('./perMes.vue')
+	let io = require('socket.io-client')
 	module.exports = {
 		props: ['host'],
 		components: {
-			search
+			search,
+			permes
 		},
 		data: () => {
 			return {
 				groupList: [],
 				isClosing: false,
 				fontSize: parseFloat(document.documentElement.style.fontSize),
-				userId: '123',
+				userId: sessionStorage.userId,
+				head: sessionStorage.head,
 				searchShow: false,
+				perMes: false,
 			}
 		},
 		methods: {
@@ -72,12 +78,21 @@
 						if(value.groupName == '我的好友') {
 							value.groupList.push({
 								contactId: user.userName,
-								name: user.userId
+								name: user.userId,
+								head: user.head
 							})
 						}
 					})
 					let updateGroup = (this.$refs)['我的好友'][0];
-					updateGroup.style.height = parseFloat(updateGroup.style.height) + 1.5 * this.fontSize + 'px';
+					if(updateGroup) {
+						if(!updateGroup.parentNode.classList.contains('active')) {
+							updateGroup.parentNode.firstChild.click();
+						}
+						updateGroup.style.height = parseFloat(updateGroup.style.height) + 1.5 * this.fontSize + 'px';
+					}
+				})
+				common.bus.$on('perMes', (data) => {
+					this.perMes = data;
 				})
 			},
 			initGroupList: function() {
@@ -101,6 +116,8 @@
 			sessionStorage.page = 'home';
 			this.bindEvent();
 			this.initGroupList();
+			this.$parent.socket = io(this.host);
+			this.$parent.socket.emit('message', sessionStorage.username);
 		}
 	}
 </script>

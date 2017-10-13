@@ -3,7 +3,7 @@
      	<i v-if="hasReturn" class="ui-icon-return return" @click="back"></i>
      	<span v-if="hasTitle" class="title">Jacy Chat</span>
      	<div v-if="hasPerMes" class="perMes" @click='changePerMes($event)'>
-     		<i class="ui-icon-personal user-head"></i>
+     		<i :class="[{'ui-icon-personal': head == 0, 'ui-icon-female': head == 1}, 'user-head']"></i>
      		<span class="user-name">{{userId}}</span>
      	</div>
      	<span v-if="isContact" class="contactName">{{contactName}}</span>
@@ -18,7 +18,8 @@
 		props: ['hasReturn', 'hasTitle', 'isContact', 'hasRefresh', 'hasAdd', 'hasPerMes', 'contactName'],
 		data() {
 			return {
-				userId: sessionStorage.userId
+				userId: sessionStorage.userId,
+				head: sessionStorage.head
 			}
 		},
 		methods: {
@@ -37,7 +38,7 @@
 			},
 			changePerMes: (e) => {
 				if(e.target.tagName.toLowerCase() != 'div') {
-					
+					common.bus.$emit('perMes', true)
 				}
 			}
 		}
@@ -100,6 +101,9 @@
 		.user-head {
 			font-size: .9rem;
 			color: #fff;
+		}
+		.ui-icon-female {
+			font-size: 1.2rem;
 		}
 		.user-name {
 			margin-left: .1rem;

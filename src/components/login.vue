@@ -62,6 +62,11 @@
 					http('post', this.host + 'login', data, 'json', (res) => {
 						if(res.data.code == 1) {
 							sessionStorage.userId = res.data.user;
+							sessionStorage.head = res.data.head;
+							//触发视图更新
+							(this.$parent.$children)[0].userId = sessionStorage.userId;
+							(this.$parent.$children)[0].head = sessionStorage.head
+							sessionStorage.username = this.$refs.username.value;
 							location.replace('/#/home')
 						}else {
 							this.throttle = false;
@@ -92,6 +97,9 @@
 						}
 						http('post', this.host + 'register', data, 'json', (res) => {
 							if(res.data.code == 1) {
+								sessionStorage.userId = this.$refs.userId.value;
+								//触发视图更新
+								(this.$parent.$children)[0].userId = sessionStorage.userId;
 								location.replace('/#/home')
 							}
 						}, function(err) {

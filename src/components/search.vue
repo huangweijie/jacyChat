@@ -11,7 +11,7 @@
 					<li v-for='list in searchList'>
 						<i class="ui-icon-personal"></i>
 						<span>{{list.userId}}</span>
-						<i class="ui-icon-add-people" @click='addFriend(list.userName, list.userId, $event)'></i>
+						<i class="ui-icon-add-people" @click='addFriend(list.userName, list.userId, list.head, $event)'></i>
 					</li>
 				</ul>
 			</div>
@@ -48,16 +48,18 @@
 					common.bus.$emit('search', false)
 				}
 			},
-			addFriend: function(userName, userId, e) {
+			addFriend: function(userName, userId, head, e) {
 				http('post', this.host + 'addFriend', {
 					userName: userName,
-					userId: userId
+					userId: userId,
+					head: head
 				}, 'json', (res) => {
 					e.target.parentNode.style.display = 'none';
 					common.bus.$emit('search', false)
 					this.updateGroupList({
 						userId: userId,
-						userName: userName
+						userName: userName,
+						head: head
 					});
 				}, (err) => {
 					console.log(err)
