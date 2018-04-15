@@ -2,12 +2,14 @@
     <div id="app" v-cloak>
         <appHeader :hasTitle='hasTitle' :hasRefresh='hasRefresh' :hasAdd='hasAdd' :hasReturn='hasReturn' :isContact='isContact' :hasPerMes='hasPerMes' :contactName='contactName'></appHeader>
         <router-view host="http://localhost:3000/" :socket='socket'></router-view>
+        <appFooter></appFooter>
     </div>
 </template>
 
 <script>
     import 'frozenui'
     import appHeader from '@/components/header'
+    import appFooter from '@/components/footer'
     import common from './common.js'
     export default {
         name: 'app',
@@ -25,6 +27,7 @@
         },
         components: {
             appHeader,
+            appFooter
         },
         created() {
             //初始化rem

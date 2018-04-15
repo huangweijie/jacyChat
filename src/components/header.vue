@@ -4,7 +4,7 @@
      	<span v-if="hasTitle" class="title">Jacy Chat</span>
      	<div v-if="hasPerMes" class="perMes" @click='changePerMes($event)'>
      		<i :class="[{'ui-icon-personal': head == 0, 'ui-icon-female': head == 1}, 'user-head']"></i>
-     		<span class="user-name">{{userId}}</span>
+     		<span class="user-name">{{userName}}</span>
      	</div>
      	<span v-if="isContact" class="contactName">{{contactName}}</span>
      	<i v-if="hasRefresh" class="ui-icon-refresh refresh" @click="refresh"></i>
@@ -18,8 +18,8 @@
 		props: ['hasReturn', 'hasTitle', 'isContact', 'hasRefresh', 'hasAdd', 'hasPerMes', 'contactName'],
 		data() {
 			return {
-				userId: sessionStorage.userId,
-				head: sessionStorage.head
+				userName: sessionStorage.userName,
+				head: sessionStorage.head || 0
 			}
 		},
 		methods: {

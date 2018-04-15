@@ -2,7 +2,7 @@
 	<section class="perMes">
 		<i class="close" @click="close">X</i>
 		<i :class="[{'ui-icon-personal': headProp == 0, 'ui-icon-female': headProp == 1}, 'userHead']" @click="changeHead" ref="userhead"></i>
-		<input class="userName" :value="userId" :disabled="!isSelf" ref='userName'>
+		<input class="userName" :value="userName" :disabled="!isSelf" ref='userName'>
 		<button class="saveBtn ui-btn" @click="save">保存</button>
 	</section>
 </template>
@@ -11,10 +11,10 @@
 	let common = require('../common.js')
 	let http = require('../axios.js')
 	module.exports = {
-		props: ['userId', 'isSelf', 'host', 'headProp'],
+		props: ['userName', 'isSelf', 'host', 'headProp'],
 		data() {
 			return {
-				head: 0,
+				head: 0
 			}
 		},
 		methods: {
@@ -40,14 +40,14 @@
 			save() {
 				http('post', this.host + 'changePerMes', {
 					head: this.head,
-					userId: this.$refs.userName.value
+					userName: this.$refs.userName.value
 				}, 'json', (res) => {
-					sessionStorage.userId = this.$refs.userName.value;
+					sessionStorage.userName = this.$refs.userName.value;
 					sessionStorage.head = this.head;
 					//触发头部更新
-					(this.$parent.$parent.$children)[0].userId = sessionStorage.userId;
+					(this.$parent.$parent.$children)[0].userName = sessionStorage.userName;
 					(this.$parent.$parent.$children)[0].head = sessionStorage.head;
-					this.$parent.userId = sessionStorage.userId;
+					this.$parent.userName = sessionStorage.userName;
 					this.$parent.head = sessionStorage.head;
 				}, (err) => {
 					console.log(err);

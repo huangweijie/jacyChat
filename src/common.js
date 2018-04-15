@@ -4,6 +4,7 @@ let host = 'http://localhost:3000/';
 module.exports = {
 	changeHeader: (vm, obj) => {
 		let parent = vm.$parent;
+		console.log(vm,obj,parent)
         parent.hasTitle = obj.hasTitle || false;
         parent.hasRefresh = obj.hasRefresh || false;
         parent.hasAdd = obj.hasAdd || false;

@@ -29,10 +29,10 @@
 					this.$refs.textarea.value = '';
 					console.log(mes)
 					this.socket.emit('send', {
-						from: sessionStorage.username,
+						from: sessionStorage.userId,
 						to: this.$route.params.contactId,
 						mes: mes,
-						fromName: sessionStorage.userId
+						fromName: sessionStorage.userName
 					})
 				}
 			},
@@ -43,9 +43,9 @@
 			},
 			bindEvent() {
 				//自己接收
-				console.log('to' + sessionStorage.username)
+				console.log('to' + sessionStorage.userId)
 				console.log('to' + this.$route.params.contactId)
-				this.socket.on('to' + sessionStorage.username, (data, datafrom, datafromName) => {
+				this.socket.on('to' + sessionStorage.userId, (data, datafrom, datafromName) => {
 					console.log('get')
 					if(datafrom == this.$route.params.contactId) {
 						this.mesList.push({
@@ -67,7 +67,7 @@
 					this.mesList.push({
 						isSelf: true,
 						mes: data,
-						user: sessionStorage.userId
+						user: sessionStorage.userName
 					})
 				})
 			}
@@ -80,8 +80,8 @@
 			});
 			this.bindEvent();
 			http('post', this.host + 'updateRecent', {
-				userName: this.$route.params.contactId,
-				userId: this.$route.params.contactName,
+				userId: this.$route.params.contactId,
+				userName: this.$route.params.contactName,
 				head: this.$route.params.head
 			}, 'json', (res) => {
 				console.log(res);

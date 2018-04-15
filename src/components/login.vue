@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<form class="loginForm">
-			<div id="username">
-				<span class="username">用户名</span>
-				<input type="text" ref="username">
+			<div id="userId">
+				<span class="userId">用户名</span>
+				<input type="text" ref="userId">
 			</div>
 			<div id="password">
 				<span class="password">密码</span>
@@ -13,9 +13,9 @@
 				<span class="repeatPw">确认密码</span>
 				<input type="password" ref="repeatPw">
 			</div>
-			<div id="userId" v-if="isRegister">
-				<span class="userId">昵称</span>
-				<input type="text" ref="userId">
+			<div id="userName" v-if="isRegister">
+				<span class="userName">昵称</span>
+				<input type="text" ref="userName">
 			</div>
 			<button class="loginBtn" @click="login">登录</button>
 			<button class="registerBtn" @click="register">注册</button>
@@ -56,17 +56,18 @@
 					this.isRegister = false;
 				}else {
 					var data = {
-						username: this.$refs.username.value,
+						userId: this.$refs.userId.value,
 						password: this.$refs.password.value
 					}
 					http('post', this.host + 'login', data, 'json', (res) => {
+						console.log(res)
 						if(res.data.code == 1) {
-							sessionStorage.userId = res.data.user;
+							sessionStorage.userName = res.data.user;
 							sessionStorage.head = res.data.head;
 							//触发视图更新
-							(this.$parent.$children)[0].userId = sessionStorage.userId;
+							(this.$parent.$children)[0].userName = sessionStorage.userName;
 							(this.$parent.$children)[0].head = sessionStorage.head
-							sessionStorage.username = this.$refs.username.value;
+							sessionStorage.userId = this.$refs.userId.value;
 							location.replace('/#/home')
 						}else {
 							this.throttle = false;
@@ -91,15 +92,15 @@
 						this.tips = 'fail';
 					}else if(password === repeatPw) {
 						let data = {
-							username: this.$refs.username.value,
+							userId: this.$refs.userId.value,
 							password: this.$refs.password.value,
-							userId: this.$refs.userId.value
+							userName: this.$refs.userName.value
 						}
 						http('post', this.host + 'register', data, 'json', (res) => {
 							if(res.data.code == 1) {
-								sessionStorage.userId = this.$refs.userId.value;
+								sessionStorage.userName = this.$refs.userName.value;
 								//触发视图更新
-								(this.$parent.$children)[0].userId = sessionStorage.userId;
+								(this.$parent.$children)[0].userName = sessionStorage.userName;
 								location.replace('/#/home')
 							}
 						}, function(err) {
@@ -135,7 +136,7 @@
 		top: 0;
 		bottom: 0;
 		margin: auto;
-		#username {
+		#userId {
 			margin-bottom: 1rem;
 			span {
 				display: inline-block;
@@ -146,7 +147,7 @@
 				vertical-align: middle;
 			}
 		}
-		#userId {
+		#userName {
 			margin-top: 1rem;
 			span {
 				display: inline-block;
