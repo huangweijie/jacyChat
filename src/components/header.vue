@@ -2,13 +2,14 @@
 	<header>
      	<i v-if="hasReturn" class="ui-icon-return return" @click="back"></i>
      	<span v-if="hasTitle" class="title">Jacy Chat</span>
-     	<div v-if="hasPerMes" class="perMes" @click='changePerMes($event)'>
+     	<div v-if="hasPerMes" class="perMes">
      		<i :class="[{'ui-icon-personal': head == 0, 'ui-icon-female': head == 1}, 'user-head']"></i>
      		<span class="user-name">{{userName}}</span>
      	</div>
      	<span v-if="isContact" class="contactName">{{contactName}}</span>
      	<i v-if="hasRefresh" class="ui-icon-refresh refresh" @click="refresh"></i>
      	<i v-if="hasAdd" class="ui-icon-add add" @click='add'></i>
+     	<i class="icon-editFD editFD" @click='showEditFD'></i>
     </header>
 </template>
 
@@ -36,10 +37,8 @@
 			add: () => {
 				common.bus.$emit('search', true)
 			},
-			changePerMes: (e) => {
-				if(e.target.tagName.toLowerCase() != 'div') {
-					common.bus.$emit('perMes', true)
-				}
+			showEditFD: () => {
+				console.log('edit');
 			}
 		}
 	}
@@ -62,6 +61,7 @@
 		overflow: hidden;
 		box-sizing: border-box;
 		padding: 0 .3rem;
+		z-index: 999;
   	}
   	.title {
   		display: box;
@@ -109,5 +109,13 @@
 			margin-left: .1rem;
 			font-size: .5rem;
 		}
+	}
+	.editFD {
+		display: box;
+		display: -webkit-box;
+		-webkit-box-align: center;
+		-webkit-box-pack: center;
+		font-size: .8rem;
+		color: rgba(0, 0, 0, .5);
 	}
 </style>

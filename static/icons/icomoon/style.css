@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?f2tpxo');
-  src:  url('fonts/icomoon.eot?f2tpxo#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?f2tpxo') format('truetype'),
-    url('fonts/icomoon.woff?f2tpxo') format('woff'),
-    url('fonts/icomoon.svg?f2tpxo#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?d6npbj');
+  src:  url('fonts/icomoon.eot?d6npbj#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?d6npbj') format('truetype'),
+    url('fonts/icomoon.woff?d6npbj') format('woff'),
+    url('fonts/icomoon.svg?d6npbj#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,85 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-password:before {
+  content: "\e913";
+}
+.icon-userName:before {
+  content: "\e914";
+}
+.icon-boys .path1:before {
+  content: "\e904";
+  color: rgb(160, 217, 246);
+}
+.icon-boys .path2:before {
+  content: "\e905";
+  margin-left: -1em;
+  color: rgb(252, 233, 234);
+}
+.icon-boys .path3:before {
+  content: "\e906";
+  margin-left: -1em;
+  color: rgb(207, 224, 125);
+}
+.icon-boys .path4:before {
+  content: "\e907";
+  margin-left: -1em;
+  color: rgb(254, 254, 254);
+}
+.icon-boys .path5:before {
+  content: "\e908";
+  margin-left: -1em;
+  color: rgb(126, 167, 1);
+}
+.icon-boys .path6:before {
+  content: "\e909";
+  margin-left: -1em;
+  color: rgb(247, 185, 112);
+}
+.icon-boys .path7:before {
+  content: "\e90a";
+  margin-left: -1em;
+  color: rgb(251, 206, 119);
+}
+.icon-girls .path1:before {
+  content: "\e90b";
+  color: rgb(252, 208, 119);
+}
+.icon-girls .path2:before {
+  content: "\e90c";
+  margin-left: -1em;
+  color: rgb(252, 233, 234);
+}
+.icon-girls .path3:before {
+  content: "\e90d";
+  margin-left: -1em;
+  color: rgb(173, 190, 32);
+}
+.icon-girls .path4:before {
+  content: "\e90e";
+  margin-left: -1em;
+  color: rgb(190, 207, 61);
+}
+.icon-girls .path5:before {
+  content: "\e90f";
+  margin-left: -1em;
+  color: rgb(255, 159, 49);
+}
+.icon-girls .path6:before {
+  content: "\e910";
+  margin-left: -1em;
+  color: rgb(254, 254, 254);
+}
+.icon-girls .path7:before {
+  content: "\e911";
+  margin-left: -1em;
+  color: rgb(255, 159, 49);
+}
+.icon-girls .path8:before {
+  content: "\e912";
+  margin-left: -1em;
+  color: rgb(255, 159, 49);
+}
 .icon-chat:before {
   content: "\e902";
 }

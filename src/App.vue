@@ -2,7 +2,7 @@
     <div id="app" v-cloak>
         <appHeader :hasTitle='hasTitle' :hasRefresh='hasRefresh' :hasAdd='hasAdd' :hasReturn='hasReturn' :isContact='isContact' :hasPerMes='hasPerMes' :contactName='contactName'></appHeader>
         <router-view host="http://localhost:3000/" :socket='socket'></router-view>
-        <appFooter></appFooter>
+        <appFooter v-if="hasFooter"></appFooter>
     </div>
 </template>
 
@@ -22,7 +22,8 @@
                 isContact: false,
                 hasPerMes: false,
                 contactName: '',
-                socket: ''
+                socket: '',
+                hasFooter: false
             }
         },
         components: {

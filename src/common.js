@@ -15,6 +15,12 @@ module.exports = {
 	},
 	//上车了上车了，有什么消息都可以传输
 	bus: new vue.default(),
+	storageUser: (user) => {
+		sessionStorage.userName = user.userName;
+		sessionStorage.userId = user.userId;
+		sessionStorage.head = user.head;
+		sessionStorage.sex = user.sex;
+	},
 	getCookie: (key) => {
 		return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null
 	},

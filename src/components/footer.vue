@@ -1,7 +1,9 @@
 <template>
     <div class="footer-container">
         <div v-for="(item, index) in footerList" class="footer-icon" :class="{'selected': item.hasSelect}" :key="index" @click="changePage(index)">
-            <i :class="item.itemClassName"></i>{{item.itemName}}
+            <router-link :to="{name: item.pageName}">
+                <i :class="item.itemClassName"></i>{{item.itemName}}
+            </router-link>
         </div>
     </div>
 </template>
@@ -13,26 +15,29 @@
                 footerList: [{
                     itemName: '聊天',
                     itemClassName: 'icon-chat',
-                    hasSelect: true
+                    hasSelect: true,
+                    pageName: 'home'
                 }, {
                     itemName: '通讯录',
                     itemClassName: 'icon-contacts',
-                    hasSelect: false
+                    hasSelect: false,
+                    pageName: 'contactList'
                 }, {
                     itemName: '朋友圈',
                     itemClassName: 'icon-friends',
-                    hasSelect: false
+                    hasSelect: false,
+                    pageName: 'friendDynamic'
                 }, {
                     itemName: '我',
                     itemClassName: 'icon-personalcenter',
-                    hasSelect: false
+                    hasSelect: false,
+                    pageName: 'personal'
                 }]
             }
         },
 
         created() {
             this.footerList.forEach((value, index) => {
-                console.log(this, value, index)
                 if(value.hasSelect) {
                     this.preIndex = index;
                 }
@@ -75,9 +80,12 @@
                 line-height: .85rem;
                 color: #666;
             }
+            a {
+                color: #000;
+            }
             &.selected {
                 color: #57c2e8;
-                i {
+                i, a {
                     color: #57c2e8;
                 }
             }

@@ -23,6 +23,21 @@ const contact = resolve => {
 		resolve(require('../components/contact.vue'))
 	})
 }
+const contactList = resolve => {
+	require.ensure(['../components/contactList.vue'], () => {
+		resolve(require('../components/contactList.vue'))
+	})
+}
+const personal = resolve => {
+	require.ensure(['../components/perMes.vue'], () => {
+		resolve(require('../components/perMes.vue'))
+	})
+}
+const friendDynamic = resolve => {
+	require.ensure(['../components/friendDynamic.vue'], () => {
+		resolve(require('../components/friendDynamic.vue'))
+	})
+} 
 
 Vue.use(Router)
 
@@ -39,13 +54,25 @@ export default new Router({
 	    	name: 'login',
 	    	component: login
 		}, {
-			path: '/home',
+			path: '/chat',
 			name: 'home',
 			component: home
 		}, {
-			path: '/contact/:userId/:contactId/:contactName/:head',
+			path: '/contactList',
+			name: 'contactList',
+			component: contactList
+		}, {
+			path: '/contact',
 			name: 'contact',
 			component: contact
+		}, {
+			path: '/personal',
+			name: 'personal',
+			component: personal
+		}, {
+			path: '/friendDynamic',
+			name: 'friendDynamic',
+			component: friendDynamic
 		}
   	]
 })

@@ -33,6 +33,6 @@ module.exports = merge(baseWebpackConfig, {
       inject: true
     }),
     new FriendlyErrorsPlugin(),
-    new ExtractTextPlugin('styles.css'),
+    new ExtractTextPlugin('css/[name].[contenthash:8].css'),
   ]
 })

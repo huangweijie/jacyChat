@@ -32,7 +32,10 @@
 						from: sessionStorage.userId,
 						to: this.$route.params.contactId,
 						mes: mes,
-						fromName: sessionStorage.userName
+						fromHead: sessionStorage.head,
+						toHead: this.$route.params.head,
+						fromName: sessionStorage.userName,
+						toName: this.$route.params.contactName
 					})
 				}
 			},
@@ -79,15 +82,18 @@
 				contactName: this.$route.params.contactName
 			});
 			this.bindEvent();
-			http('post', this.host + 'updateRecent', {
-				userId: this.$route.params.contactId,
-				userName: this.$route.params.contactName,
-				head: this.$route.params.head
+			http('post', this.host + 'updateRecentMes', {
+				to: this.$route.params.contactId,
+				fromHead: sessionStorage.head,
+				toHead: this.$route.params.head,
+				fromName: sessionStorage.userName,
+				toName: this.$route.params.contactName
 			}, 'json', (res) => {
 				console.log(res);
 			}, (err) => {
 				console.log(err);
 			})
+			this.$parent.hasFooter = false;
 		},
 		mounted() {
 			document.documentElement.style.backgroundColor = '#f8f8f8';
