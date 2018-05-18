@@ -2,8 +2,8 @@
     <div class="container ui-selector-content">
     <ul class="ui-list ui-border-b">
         <li class="ui-list-info ui-border-t" v-for="item in contactList" >
-            <router-link :to="{name: 'contact', params: {userName: userName, contactId: item.contactId, contactName: item.name, head: item.head}}">
-                <i :class="{'ui-icon-personal': item.head == 0, 'ui-icon-femail': item.head == 1}"></i><span class="contactName">{{item.name}}</span>
+            <router-link :to="{name: 'contact', params: {contactId: item.userId, contactName: item.userName, head: item.head, sex: item.sex}}">
+                <img :src="item|getUserHead"><span class="contactName">{{item.userName}}</span>
             </router-link>
         </li>
     </ul>
@@ -35,11 +35,6 @@
         },
         methods: {
             bindEvent: function() {
-                common.changeHeader(this, {
-                    hasAdd: true,
-                    hasRefresh: true,
-                    hasPerMes: true,
-                })
                 common.bus.$on('search', (data) => {
                     this.searchShow = data;
                 })
@@ -49,21 +44,25 @@
                     token: localStorage.access_token
                 }, 'json', (res) => {
                     this.contactList = res.data.contactList && res.data.contactList.groupList;
-                    console.log(this.contactList)
                 }, (err) => {
                     console.log(err);
                 })
             }
         },
         created() {
-            sessionStorage.page = 'home';
+            common.changeHeader({
+                hasPerMes: true,
+                hasAdd: true
+            })
             this.bindEvent();
             this.initGroupList();
             this.$parent.socket = io(this.host);
             this.$parent.socket.emit('message', sessionStorage.userId);
-
-            console.log('contactList')
-            this.$parent.hasFooter = true;
+        },
+        filters: {
+            getUserHead: (user) => {
+                return common.getUserHead(user.head, user.sex);
+            }
         }
     }
 </script>
@@ -90,13 +89,16 @@
                 width: 100%;
                 height: 100%;
                 padding-left: .5rem;
-                i {
-                    display: inline-block;
-                    margin-right: 0.1rem;
-                    font-size: .85rem;
-                    line-height: .85rem;
+                img {
+                    width: 1rem;
+                    height: 1rem;
                     vertical-align: middle;
+                    margin-right: .2rem;
                 }
+            }
+            .contactName {
+                font-size: .6rem;
+                vertical-align: middle;
             }
         }
         li:last-child {

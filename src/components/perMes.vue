@@ -7,7 +7,7 @@
 		<div class="head">
 			<div class="left">头像</div>
 			<div class="right">
-				<img src="" alt="" />
+				<img :src="head" alt="" />
 			</div>
 		</div>
 		<div class="userName" @click='changeUerName'>
@@ -47,10 +47,10 @@
 	module.exports = {
 		data() {
 			return {
-				head: 0,
+				head: '',
 				userName: sessionStorage.userName,
 				userId: sessionStorage.userId,
-				sex: '男',
+				sex: sessionStorage.sex == '1' ? '女' : '男',
 				editAreaShow: false,
 				inputMes: '',
 				tips: ''
@@ -121,7 +121,11 @@
 			}
 		},
 		created() {
-			this.head = sessionStorage.head;
+			common.changeHeader({
+				hasPerMes: true,
+				hasAdd: true
+			})
+			this.head = common.getUserHead(sessionStorage.head, sessionStorage.sex);
 		}
 	}
 </script>
@@ -141,6 +145,14 @@
 			justify-content: space-between;
 			&:active {
 				background: rgba(0, 0, 0, .2);
+			}
+		}
+		.head {
+			.right {
+				img {
+					width: 1rem;
+					display: block;
+				}
 			}
 		}
 		.left {

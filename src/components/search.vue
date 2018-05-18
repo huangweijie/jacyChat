@@ -8,10 +8,11 @@
 			</div>
 			<div class="search-list">
 				<ul>
-					<li v-for='list in searchList'>
-						<i class="ui-icon-personal"></i>
-						<span>{{list.userId}}</span>
-						<i class="ui-icon-add-people" @click='addFriend(list.userName, list.userId, list.head, $event)'></i>
+					<li v-for='item in searchList'>
+						<!-- <i class="ui-icon-personal"></i> -->
+						<img class='userHead' :src="item|getUserHead" alt="" />
+						<span>{{item.userId}}</span>
+						<i class="ui-icon-add-people" @click='addFriend(item.userName, item.userId, item.head, $event)'></i>
 					</li>
 				</ul>
 			</div>
@@ -68,6 +69,11 @@
 			updateGroupList: function(user) {
 				common.bus.$emit('updateGroupList', user);
 			}
+		},
+		filters: {
+			getUserHead: (user) => {
+				return common.getUserHead(user.head, user.sex);
+			}
 		}
 	}
 </script>
@@ -111,6 +117,7 @@
 		width: 100%;
 		min-height: 100%;
 		top: 0;
+		z-index: 999;
 		.search-mes {
 			height: 1.2rem;
 			background-color: #fff;
@@ -135,30 +142,35 @@
 			}
 		}
 		.search-list {
-				li {
-					height: 1.5rem;
-					background-color: #fff;
-					border-bottom: 1px solid rgba(0, 0, 0, .5);
-					box-sizing: border-box;
-					display: flex;
-					align-items: center;
-					&:first-child {
-						border-top: 1px solid rgba(0, 0, 0, .5);
+			li {
+				height: 1.5rem;
+				background-color: #fff;
+				border-bottom: 1px solid rgba(0, 0, 0, .5);
+				box-sizing: border-box;
+				display: flex;
+				align-items: center;
+				&:first-child {
+					border-top: 1px solid rgba(0, 0, 0, .5);
+				}
+				i {
+					margin: 0 .2rem;
+					&.ui-icon-personal {
+						font-size: .9rem;
 					}
-					i {
-						margin: 0 .2rem;
-						&.ui-icon-personal {
-							font-size: .9rem;
-						}
-						&.ui-icon-add-people {
-							font-size: 1rem;
-						}
-					}
-					span {
-						flex-grow: 1;
-						font-size: .5rem;
+					&.ui-icon-add-people {
+						font-size: 1rem;
 					}
 				}
+				span {
+					flex-grow: 1;
+					font-size: .5rem;
+				}
+				.userHead {
+					width: 1rem;
+					margin: 0 .2rem 0 .3rem;
+					vertical-align: middle;
+				}
+			}
 		}
 	}
 </style>

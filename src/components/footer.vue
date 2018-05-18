@@ -2,7 +2,7 @@
     <div class="footer-container">
         <div v-for="(item, index) in footerList" class="footer-icon" :class="{'selected': item.hasSelect}" :key="index" @click="changePage(index)">
             <router-link :to="{name: item.pageName}">
-                <i :class="item.itemClassName"></i>{{item.itemName}}
+                <i :class="item.itemClassName"></i><span>{{item.itemName}}</span>
             </router-link>
         </div>
     </div>
@@ -23,10 +23,10 @@
                     hasSelect: false,
                     pageName: 'contactList'
                 }, {
-                    itemName: '朋友圈',
-                    itemClassName: 'icon-friends',
+                    itemName: '发现',
+                    itemClassName: 'icon-find',
                     hasSelect: false,
-                    pageName: 'friendDynamic'
+                    pageName: 'find'
                 }, {
                     itemName: '我',
                     itemClassName: 'icon-personalcenter',
@@ -37,10 +37,15 @@
         },
 
         created() {
-            this.footerList.forEach((value, index) => {
-                if(value.hasSelect) {
-                    this.preIndex = index;
-                }
+            this.$router.beforeEach((to, from, next) => {
+                this.footerList.map(function(value, index) {
+                    if(value.pageName == to.name){
+                        value.hasSelect = true;
+                    }else {
+                        value.hasSelect = false;
+                    }
+                })
+                next();
             })
         },
 
@@ -51,12 +56,13 @@
              * @return {[type]}       [description]
              */
             changePage: function(index) {
-                let preIndex = this.preIndex;
-                if(preIndex != index) {
-                    this.footerList[preIndex].hasSelect = false;
-                    this.footerList[index].hasSelect = true;
-                    this.preIndex = index;
-                }
+                this.footerList.map(function(value, keyIndex) {
+                    if(keyIndex == index){
+                        value.hasSelect = true;
+                    }else {
+                        value.hasSelect = false;
+                    }
+                })
             }
         }
     }
@@ -74,14 +80,21 @@
         .footer-icon {
             width: 25%;
             text-align: center;
+            height: 1.3rem;
             i {
                 display: block;
-                font-size: .85rem;
-                line-height: .85rem;
+                font-size: .7rem;
+                // line-height: .4rem;
                 color: #666;
             }
-            a {
+            a { 
+                display: block;
+                margin-top: .1rem;
                 color: #000;
+            }
+            span {
+                display: block;
+                font-size: .3rem;
             }
             &.selected {
                 color: #57c2e8;

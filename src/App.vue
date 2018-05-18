@@ -1,8 +1,10 @@
 <template>
     <div id="app" v-cloak>
-        <appHeader :hasTitle='hasTitle' :hasRefresh='hasRefresh' :hasAdd='hasAdd' :hasReturn='hasReturn' :isContact='isContact' :hasPerMes='hasPerMes' :contactName='contactName'></appHeader>
+        <appHeader v-if="hasHeader" :headerConfig='headerConfig'></appHeader>
+        <div v-if="hasHeader" class="header-space"></div>
         <router-view host="http://localhost:3000/" :socket='socket'></router-view>
-        <appFooter v-if="hasFooter"></appFooter>
+        <appFooter v-show="hasFooter"></appFooter>
+        <div v-if="hasFooter" class="footer-space"></div>
     </div>
 </template>
 
@@ -15,15 +17,18 @@
         name: 'app',
         data: () => {
             return {
-                hasTitle: true,
-                hasRefresh: true,
-                hasAdd: false,
-                hasReturn: false,
-                isContact: false,
-                hasPerMes: false,
-                contactName: '',
                 socket: '',
-                hasFooter: false
+                hasFooter: false,
+                hasHeader: true,
+                headerConfig: {
+                    hasTitle: true,
+                    hasRefresh: false,
+                    hasAdd: false,
+                    hasReturn: false,
+                    isContact: false,
+                    hasPerMes: false,
+                    contactName: ''
+                }
             }
         },
         components: {
@@ -42,6 +47,14 @@
             window.onresize = resize;
             document.getElementsByTagName('html')[0].style.minHeight = window.innerHeight + 'px';
             document.getElementsByTagName('body')[0].style.minHeight = window.innerHeight + 'px';
+
+            common.bus.$on('toggleHeader', (isShow) => {
+                this.hasHeader = isShow;
+            })
+
+            common.bus.$on('toggleFooter', (isShow) => {
+                this.hasFooter = isShow;
+            })
         }
     }
 </script>
@@ -60,5 +73,13 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         color: #2c3e50;
+    }
+    .header-space {
+        width: 100%;
+        height: 1.3rem;
+    }
+    .footer-space {
+        width: 100%;
+        height: 1.4666rem;
     }
 </style>

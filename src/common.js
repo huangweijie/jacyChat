@@ -2,17 +2,6 @@ let vue = require('vue');
 let io = require('socket.io-client');
 let host = 'http://localhost:3000/';
 module.exports = {
-	changeHeader: (vm, obj) => {
-		let parent = vm.$parent;
-		console.log(vm,obj,parent)
-        parent.hasTitle = obj.hasTitle || false;
-        parent.hasRefresh = obj.hasRefresh || false;
-        parent.hasAdd = obj.hasAdd || false;
-        parent.hasReturn = obj.hasReturn || false;
-        parent.isContact = obj.isContact || false;
-        parent.hasPerMes = obj.hasPerMes || false;
-        parent.contactName = obj.contactName || '';
-	},
 	//上车了上车了，有什么消息都可以传输
 	bus: new vue.default(),
 	storageUser: (user) => {
@@ -20,6 +9,33 @@ module.exports = {
 		sessionStorage.userId = user.userId;
 		sessionStorage.head = user.head;
 		sessionStorage.sex = user.sex;
+	},
+	toggleHeader: function(isShow) {
+		this.bus.$emit('toggleHeader', isShow);
+	},
+	toggleFooter: function(isShow) {
+		this.bus.$emit('toggleFooter', isShow);
+	},
+	changeHeader: function(config) {
+		this.bus.$emit('changeHeader', config);
+	},
+	toggleWishHeader: function(isShow) {
+		this.bus.$emit('toggleWishHeader', isShow);
+	},
+	toggleWishFooter: function(isShow) {
+		this.bus.$emit('toggleWishFooter', isShow);
+	},
+	changeWishHeader: function(config) {
+		this.bus.$emit('changeWishHeader', config);
+	},
+	getUserHead: function(head, sex) {
+		if(head != 'null') {
+			return head;
+		}else if(sex == '1') {
+			return 'static/img/girlHead.png';
+		}else {
+			return 'static/img/boyHead.png';
+		}
 	},
 	getCookie: (key) => {
 		return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null

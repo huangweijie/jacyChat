@@ -1,0 +1,221 @@
+html,body {
+	width:100%;
+	height:100%;
+	padding:0;
+	margin:0;
+	overflow:hidden !important;
+}
+body {
+	max-width: 600px;
+	margin: 0 auto;
+}
+@font-face {
+	font-family: number;
+	src: url(./images/num.ttf);
+}
+#box {
+	display: none;
+}
+.back {
+	position: absolute;
+	text-align: center;
+	width: 1rem;
+	height: 1rem;
+	left: 0.5rem;
+	background: url(./images/others/back.png) no-repeat;
+	background-size: 100% 100%;
+	top: 0.5rem;
+}
+.beforeGame-girl {
+	width: 100%;
+	height: 100%;
+	background: url(./images/girl/girlBack.png) no-repeat;
+	background-size: 100% 100%;
+	// display: none;
+}
+.beforeGame-boy {
+	width: 100%;
+	height: 100%;
+	background: url(./images/boy/boyBack.png) no-repeat;
+	background-size: 100% 100%;
+	// display: none;
+}
+.start {
+	position: absolute;
+	width: 50%;
+	left: 50%;
+	transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	-os-transform: translateX(-50%);
+	-o-transform: translateX(-50%);
+	bottom: 23%;
+}
+
+@keyframes permove {
+	0% {right : 29%;transform: rotate(0);-webkit-transform: rotate(0);-o-transform: rotate(0);-os-transform: rotate(0);}
+	50% {right: 60%;transform: rotate(30deg);-webkit-transform: rotate(30deg);-o-transform: rotate(30deg);-os-transform: rotate(30deg);}
+	100% {right: 29%;transform: rotate(0);-webkit-transform: rotate(0);-o-transform: rotate(0);-os-transform: rotate(0);}
+} 
+@-webkit-keyframes permove {
+	0% {right : 29%;transform: rotate(0);-webkit-transform: rotate(0);-o-transform: rotate(0);-os-transform: rotate(0);}
+	50% {right: 60%;transform: rotate(30deg);-webkit-transform: rotate(30deg);-o-transform: rotate(30deg);-os-transform: rotate(30deg);}
+	100% {right: 29%;transform: rotate(0);-webkit-transform: rotate(0);-o-transform: rotate(0);-os-transform: rotate(0);}
+} 
+@-o-keyframes permove {
+	0% {right : 29%;transform: rotate(0);-webkit-transform: rotate(0);-o-transform: rotate(0);-os-transform: rotate(0);}
+	50% {right: 60%;transform: rotate(30deg);-webkit-transform: rotate(30deg);-o-transform: rotate(30deg);-os-transform: rotate(30deg);}
+	100% {right: 29%;transform: rotate(0);-webkit-transform: rotate(0);-o-transform: rotate(0);-os-transform: rotate(0);}
+} 
+@-os-keyframes permove {
+	0% {right : 29%;transform: rotate(0);-webkit-transform: rotate(0);-o-transform: rotate(0);-os-transform: rotate(0);}
+	50% {right: 60%;transform: rotate(30deg);-webkit-transform: rotate(30deg);-o-transform: rotate(30deg);-os-transform: rotate(30deg);}
+	100% {right: 29%;transform: rotate(0);-webkit-transform: rotate(0);-o-transform: rotate(0);-os-transform: rotate(0);}
+} 
+@keyframes cloudmove {
+	0% {right: 5%;opacity: 1;}
+	50% {right: 70%;opacity: 0.3;}
+	100% {right: 5%;opacity: 1;}
+}
+@-webkit-keyframes cloudmove {
+	0% {right: 5%;opacity: 1;}
+	50% {right: 70%;opacity: 0.3;}
+	100% {right: 5%;opacity: 1;}
+}
+@-o-keyframes cloudmove {
+	0% {right: 5%;opacity: 1;}
+	50% {right: 70%;opacity: 0.3;}
+	100% {right: 5%;opacity: 1;}
+}
+@-os-keyframes cloudmove {
+	0% {right: 5%;opacity: 1;}
+	50% {right: 70%;opacity: 0.3;}
+	100% {right: 5%;opacity: 1;}
+}
+.girlMove,.boyMove {
+	position: absolute;
+	width: 20%;
+	top: 18%;
+	right: 29%;
+	animation: permove 2s linear infinite;
+	-webkit-animation: permove 2s linear infinite;
+	-os-animation: permove 2s linear infinite;
+	-o-animation: permove 2s linear infinite;
+}
+.gameName {
+	position: absolute;
+	width: 65%;
+	left: 15%;
+	top: 28%;
+	z-index: 2
+}
+.cloud {
+	position: absolute;
+	width: 18%;
+	top: 5%;
+	right: 5%;
+	animation: cloudmove 4s linear infinite;
+	-webkit-animation: cloudmove 4s linear infinite;
+	-o-animation: cloudmove 4s linear infinite;
+	-os-animation: cloudmove 4s linear infinite;
+}
+.game-background {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	z-index: -1;
+}
+#time,#points {
+	position: absolute;
+	font-family: number;
+	font-size: 0.6rem;
+	top: 0.5rem;
+}
+#time {
+	left: 100px
+}
+
+
+.gameOver {
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	background: rgba(253,179,193,0.5);
+	z-index: 99;
+	display: none;
+}
+.gameData, .gameButton, .shareText, .shareBtn {
+	position: absolute;
+	width: 100%;
+}
+.gameData img {
+	width : 80%;
+	margin-top: 1rem;
+}
+.gameButton img {
+	width: 32%;
+	margin-top: 8rem;
+	position: relative;
+	z-index: 2;
+}
+.gameButton .again {
+	margin-right: 2%;
+}
+.gameButton .comeBack {
+	margin-left: 2%;
+}
+.gameNum {
+	position: absolute;
+	width: 100%;
+	font-family: number;
+}
+.getPoints {
+	width: 20%;
+	font-size: 1.5rem;
+	height: 1.5rem;
+	line-height: 1.5rem;
+	margin-top: 3.5rem;
+	margin-left: 46%;
+}
+.addTimes {
+	width: 10%;
+	height: 1rem;
+	font-size: 1rem;
+	line-height: 1rem;
+	margin-left: 38%;
+}
+.special {
+	width: 10%;
+	height: 1rem;
+	font-size: 1rem;
+	line-height: 1rem;
+	margin-left: 38%;
+}
+.addWeight {
+	width: 12%;
+	height: 1rem;
+	font-size: 1rem;
+	line-height: 1rem;
+	margin-left: 59%;
+}
+.withMan {
+	width: 12%;
+	height: 1rem;
+	font-size: 1rem;
+	line-height: 1rem;
+	margin-left: 31%;
+}
+.shareTImg {
+	width: 70%;
+	margin-top: 9.5rem;
+}
+.shareFriend, .share {
+	width: 20%;
+	margin-top: 11rem;
+	margin-left: 13%;
+	margin-right: 3%;
+	position: relative;
+	z-index: 2;
+}

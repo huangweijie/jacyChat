@@ -3,15 +3,16 @@
 	<ul class="ui-list ui-border-b">
 		<li class="ui-list-info ui-border-t" v-for="item in chatList" >
 			<router-link :to="{name: 'contact', params: {
-                    contactId: userId == item.from ? item.to : item.from, 
-                    contactName: userId == item.from ? item.toName : item.fromName, 
-                    head: userId == item.from ? item.toHead : item.fromHead
+                    contactId: userId == item.from.userId ? item.to.userId : item.from.userId, 
+                    contactName: userId == item.from.userId ? item.to.userName : item.from.userName, 
+                    head: userId == item.from.userId ? item.to.head : item.from.head,
+                    sex: userId == item.from.userId ? item.to.sex : item.from.sex,
                 }}">
                 <div class="userLeft">
-				    <i :class="{'ui-icon-personal': item.toHead == 0, 'ui-icon-femail': item.toHead == 1}"></i>
+                    <img :src="(userId == item.from.userId ? item.to : item.from)|getUserHead" alt="" class='userHead'/>
                 </div>
                 <div class="userRight">
-                    <p class="userName">{{userId == item.from ? item.toName : item.fromName}}</p>
+                    <p class="userName">{{userId == item.from.userId ? item.to.userName : item.from.userName}}</p>
                     <p class="chatMes">{{item | formatRecentMes}}</p>
                 </div>
 			</router-link>
@@ -44,11 +45,6 @@
 		},
 		methods: {
 			bindEvent: function() {
-				common.changeHeader(this, {
-					hasAdd: true,
-					hasRefresh: true,
-					hasPerMes: true,
-				})
 				common.bus.$on('search', (data) => {
 					this.searchShow = data;
 				})
@@ -57,7 +53,6 @@
 				http('get', this.host + 'getChatList', {
 					token: localStorage.access_token
 				}, 'json', (res) => {
-                    console.log(res)
 					this.chatList = res.data.chatList;
 				}, (err) => {
 					console.log(err);
@@ -65,23 +60,28 @@
 			}
 		},
 		created() {
-			sessionStorage.page = 'home';
-			this.bindEvent();
-			this.initGroupList();
-			this.$parent.socket = io(this.host);
-			this.$parent.socket.emit('message', sessionStorage.userId);
-			this.$parent.hasFooter = true;
+            common.changeHeader({
+                hasPerMes: true,
+                hasAdd: true
+            })
+            this.bindEvent();
+            this.initGroupList();
+            this.$parent.socket = io(this.host);
+            this.$parent.socket.emit('message', sessionStorage.userId);
 		},
         filters: {
             formatRecentMes: function(item) {
                 if(item.mes == null) {
                     return '';
                 }
-                if(item.from == sessionStorage.userId) {
+                if(item.from.userId == sessionStorage.userId) {
                     return '我 : ' + item.mes;
                 }else {
-                    return item.to + ': ' +item.mes;
+                    return item.to.userName + ': ' +item.mes;
                 }
+            },
+            getUserHead: (user) => {
+                return common.getUserHead(user.head, user.sex);
             }
         }
 	}
@@ -123,12 +123,23 @@
                 vertical-align: top;
                 line-height: 1;
             }
+            .userLeft {
+                .userHead {
+                    position: relative;
+                    width: 1.2rem;
+                    height: 1.2rem;
+                    margin-right: .1rem;
+                    line-height: 1.5rem;
+                    top: .15rem;
+                }
+            }
             .userName {
                 box-sizing: border-box;
                 font-size: .5rem;
                 height: .9rem;
                 padding-top: .3rem;
                 vertical-align: bottom;
+                color: #333;
             }
             .chatMes {
                 font-size: .3rem;

@@ -90,11 +90,8 @@
 			}
 		},
 		created() {
-			sessionStorage.page = 'login';
-			common.changeHeader(this, {
-				hasTitle: true,
-				hasAdd: false,
-				hasRefresh: true,
+			common.changeHeader({
+				hasTitle: true
 			})
 		},
 		mounted: function() {
@@ -120,13 +117,11 @@
 					password: this.$refs.loginPassword.value
 				}
 				http('post', this.host + 'login', data, 'json', (res) => {
-					console.log(res)
 					if(res.data.code == 1) {
 						common.storageUser(res.data.user);
-						//触发视图更新
-						(this.$parent.$children)[0].userName = sessionStorage.userName;
-						(this.$parent.$children)[0].head = sessionStorage.head
-						location.replace('/#/chat')
+						this.$router.push({
+							name: 'home'
+						})
 					}else {
 						this.throttle = false;
 						this.tipShow = true;
@@ -153,16 +148,16 @@
 					data.append('head', this.head);
 					http('post', this.host + 'register', data, 'json', (res) => {
 						if(res.data.code == 1) {
-							common.storageUser(res.data.user)
-							//触发视图更新
-							(this.$parent.$children)[0].userName = sessionStorage.userName;
-							location.replace('/#/chat')
+							common.storageUser(res.data.user);
+							this.$router.push({
+								name: 'home'
+							})
 						}else {
 							this.throttle = false;
 							this.tipShow = true;
 							this.tips = res.data.msg;
 						}
-					}, function(err) {
+					}, (err) => {
 						console.log(err)
 					})		
 				}

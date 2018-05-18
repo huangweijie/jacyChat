@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no"/>
+    <title>game</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+</head>
+<body>
+    <div class='beforeGame-boy'>
+            <div class="back"></div>
+            <img src="images/others/start.png" alt="" class="start">
+            <img src="images/boy/boyMove.png" alt="" class='boyMove'>
+            <img src="images/boy/Game.png" alt="" class="gameName">
+            <img src="images/others/cloud.png" alt="" class="cloud">
+    </div>
+    <img src="images/boy/boyGBack.png" alt="" class="game-background">
+    <div id="box">
+        <!-- <img src="images/others/gamming/time.png" alt="" class="time"> -->
+        <!-- <img src="images/others/gamming/score1.png" alt="" class="points"> -->
+        <canvas id="canvas"></canvas>
+    </div>
+    <div class="gameOver">
+        <div class="gameData">  
+            <img src="images/others/gameover/boyOver.png" alt="" class="girlOver">
+        </div>
+        <div class="gameButton"> 
+            <img src="images/others/gameover/again.png" alt="" class="again">
+            <img src="images/others/gameover/comeBack.png" alt="" class="comeBack">
+        </div>
+        <div class="gameNum">
+            <div class="getPoints"></div>
+            <div class="addTimes"></div>
+            <div class="special"></div>
+            <div class="withMan"></div>
+        </div>
+        <div class="shareText">
+            <!-- <img src="images/others/gameover/shareText.png" alt="" class="shareTImg"> -->
+        </div>
+        <div class="shareBtn">
+            <!-- <img src="images/others/gameover/shareFriend.png" alt="" class="shareFriend"> -->
+            <!-- <img src="images/others/gameover/share.png" alt="" class="share"> -->
+        </div>
+    </div>
+    <!-- <script src="vconsole.min.js"></script> -->
+    <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+    <script src='boy.js'></script>
+</body>
+</html>
